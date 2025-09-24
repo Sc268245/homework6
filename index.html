@@ -5,41 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samuel Caraballo - Portfolio</title>
   <style>
-    /* Grid Layout */
+    /*  Base Layout with Grid  */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #c5c5c5;
+      color: #333;
       display: grid;
-      grid-template-areas: 
+      grid-template-areas:
         "header header"
         "sidebar main"
         "footer footer";
-      grid-template-columns: 220px 1fr;
-      grid-template-rows: 70px 1fr 70px;
+      grid-template-columns: 250px 1fr;
+      grid-template-rows: auto 1fr auto;
       min-height: 100vh;
-      background-color: #969696;
-      color: #333;
     }
 
     header {
       grid-area: header;
-      background: #0c007c;
+      background-color: #0c007c;
       color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
+      padding: 20px;
+      position: sticky; 
+      top: 0;
+      z-index: 1000;
     }
 
     nav {
       grid-area: sidebar;
       background: #222;
       color: white;
-      /* Flexbox */
       display: flex; 
       flex-direction: column;
-      align-items: flex-start;
       padding: 20px;
-      position: relative;
+      position: sticky; 
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
     }
 
     nav a {
@@ -51,111 +53,166 @@
       text-decoration: underline;
     }
 
+    .resume-btn {
+      margin-top: auto;
+      background-color: red;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      position: relative; 
+      text-decoration: none;
+      transition: background-color 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
+    }
+    .resume-btn:hover {
+      background-color: darkred;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
     main {
       grid-area: main;
       padding: 20px;
-      overflow-y: auto;
+      display: grid; 
+      grid-template-columns: 1fr;
+      gap: 20px;
     }
 
     footer {
       grid-area: footer;
-      background: #0c007c;
+      background-color: #0c007c;
       color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      text-align: center;
+      padding: 10px;
     }
-
-    /* Resume Button */
-    .resume-btn {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background: #ff0000;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
+    footer a {
+      color: #ffffff;
+      margin: 0 10px;
       text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
     }
-    .resume-btn:hover {
-      background: #cc0000;
+    footer a:hover {
+      text-decoration: underline;
     }
 
-    /* Section Styling */
+    /*  Sections */
     .section {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
-    h2 {
+    h2, h3 {
       color: #0c007c;
-      border-bottom: 2px solid #0c007c;
-      padding-bottom: 5px;
     }
+
+    /* Tables for Education/Experience */
     table {
       width: 100%;
       border-collapse: collapse;
       margin: 15px 0;
     }
     table, th, td {
-      border: 1px solid #000000;
+      border: 1px solid #0059ff;
       padding: 8px;
       text-align: left;
     }
     th {
-      background: #ff0000;
+      background-color: #0051ff;
       color: white;
     }
 
-    /* Skills Flexbox */
-    .skills-container {
+    /* Skills Section */
+    .skills ul {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
-    }
-    .skill {
-      background: white;
-      border: 2px solid #0c007c;
-      padding: 10px 15px;
-      border-radius: 8px;
-      flex: 1 1 120px;
-      text-align: center;
+      padding: 0;
+      margin: 0;
     }
 
-    /* Projects Grid */
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+    .skills li {
+      background: #0c007c;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 8px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
     }
-    .project-card {
-      background: rgb(255, 255, 255);
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 4px 8px rgba(34, 34, 34, 0.2); /* Bonus */
-      transition: transform 0.3s;
+    .skills li:hover {
+      transform: scale(1.1);
+      background-color: #005ab4;
     }
-    .project-card:hover {
+
+    /* Projects Section  */
+    .projects img {
+      width: 30%;
+      margin: 10px;
+      float: left;
+      border-radius: 8px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .projects img:hover {
       transform: scale(1.05);
+      opacity: 0.8;
     }
-    .project-card img {
-      width: 100%;
-      border-radius: 8px;
+    .projects::after {
+      content: "";
+      display: block;
+      clear: both;
     }
 
-    /* Contact Info in Footer */
-    .contact-info a {
-      color: #ffffff;
-      margin: 0 10px;
-      text-decoration: none;
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      body {
+        grid-template-columns: 200px 1fr;
+      }
     }
-    .contact-info a:hover {
-      text-decoration: underline;
+
+    @media (max-width: 768px) {
+      body {
+        grid-template-areas:
+          "header"
+          "main"
+          "sidebar"
+          "footer";
+        grid-template-columns: 1fr;
+      }
+      nav {
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      nav a {
+        margin: 5px 10px;
+      }
+      .resume-btn {
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header, nav, main, footer {
+        padding: 10px;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      .skills li {
+        padding: 6px 10px;
+        font-size: 0.9em;
+      }
+      .projects img {
+        width: 100%;
+        float: none;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Header -->
+  <header>
+    <h1>Samuel Caraballo</h1>
+    <p>Motivated and detail-oriented IT Specialist with experience in HTML, Python, Java, C and JavaScript.</p>
+  </header>
 
   <!-- Sidebar Navigation -->
   <nav>
@@ -165,24 +222,19 @@
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
-    <a href="SamuelCaraballoResume.pdf" download class="resume-btn">Download Resume</a>
+    <a href="SamuelCaraballoResume.pdf" download="Samuel-Caraballo-Resume" class="resume-btn">Download Resume</a>
   </nav>
-
-  <!-- Header -->
-  <header>
-    <h1>Samuel Caraballo</h1>
-  </header>
 
   <!-- Main Content -->
   <main>
     <!-- Summary -->
-    <div class="section" id="summary">
+    <div id="summary" class="section">
       <h2>Summary</h2>
-      <p>Motivated and detail-oriented IT Specialist with experience in HTML, Python, Java, C, and JavaScript.</p>
+      <p>I am passionate about technology and problem solving. My goal is to apply my knowledge of programming and IT to create solutions and one day launch my own game.</p>
     </div>
 
     <!-- Education -->
-    <div class="section" id="education">
+    <div id="education" class="section">
       <h2>Education</h2>
       <table>
         <tr>
@@ -199,7 +251,7 @@
     </div>
 
     <!-- Experience -->
-    <div class="section" id="experience">
+    <div id="experience" class="section">
       <h2>Experience</h2>
       <table>
         <tr>
@@ -216,41 +268,39 @@
     </div>
 
     <!-- Skills -->
-    <div class="section" id="skills">
+    <div id="skills" class="section skills">
       <h2>Skills</h2>
-      <div class="skills-container">
-        <div class="skill">Python</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">HTML/CSS</div>
-        <div class="skill">Git/GitHub</div>
-        <div class="skill">Teamwork</div>
-        <div class="skill">Problem-Solving</div>
-        <div class="skill">Communication</div>
-      </div>
+      <ul>
+        <li>Python</li>
+        <li>JavaScript</li>
+        <li>HTML/CSS</li>
+        <li>Git/GitHub</li>
+        <li>Teamwork</li>
+        <li>Problem-Solving</li>
+        <li>Communication</li>
+      </ul>
     </div>
 
     <!-- Projects -->
-    <div class="section" id="projects">
+    <div id="projects" class="section projects">
       <h2>Projects</h2>
-      <div class="projects">
-        <div class="project-card">
-          <h3>Fortress Wars</h3>
-          <img src="FWspawn.png" alt="FortressWars">
-          <p>Minecraft server project where players duel each other with custom kits and maps.</p>
-          <p><a href="https://github.com/Fortress-Wars" target="_blank">GitHub</a></p>
-        </div>
-      </div>
+      <h3>Project Fortress Wars</h3>
+      <p>Minecraft server project I was invited to work on where players can duel each other with custom kits and custom maps.</p>
+      <img src="FWspawn.png" alt="Fortress Wars Spawn">
+      <img src="FWmap1.png" alt="Fortress Wars Map">
+      <img src="FWkit.png" alt="Fortress Wars Kit">
+      <p>GitHub: <a href="https://github.com/Fortress-Wars" target="_blank">FortressWars GitHub</a></p>
     </div>
   </main>
 
-  <!-- Footer Contact -->
+  <!-- Footer -->
   <footer id="contact">
-    <div class="contact-info">
+    <p>
       Email: <a href="mailto:scaraballo808@gmail.com">scaraballo808@gmail.com</a> |
       Phone: <a href="tel:+14809138758">(480) 913-8758</a> |
       <a href="https://github.com/Sc268245" target="_blank">GitHub</a> |
       <a href="https://www.linkedin.com/in/samuel-caraballo-4b4877273" target="_blank">LinkedIn</a>
-    </div>
+    </p>
   </footer>
 
 </body>
