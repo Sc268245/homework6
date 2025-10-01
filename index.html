@@ -5,204 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samuel Caraballo - Portfolio</title>
   <style>
-    /*  Base Layout with Grid  */
-    body {
+    /* Reset */
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: Arial, sans-serif;
-      background-color: #c5c5c5;
+      background-color: #f9f9f9;
       color: #333;
+      line-height: 1.6;
       display: grid;
       grid-template-areas:
         "header header"
-        "sidebar main"
+        "nav main"
         "footer footer";
-      grid-template-columns: 250px 1fr;
       grid-template-rows: auto 1fr auto;
-      min-height: 100vh;
+      grid-template-columns: 200px 1fr;
+      height: 100vh;
     }
 
+    /* Header */
     header {
       grid-area: header;
-      background-color: #0c007c;
+      background: #333;
       color: white;
-      padding: 20px;
-      position: sticky; 
+      padding: 15px;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
       z-index: 1000;
     }
 
+    /* Navigation */
     nav {
-      grid-area: sidebar;
-      background: #222;
+      grid-area: nav;
+      background: #444;
       color: white;
-      display: flex; 
+      display: flex;
       flex-direction: column;
-      padding: 20px;
-      position: sticky; 
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
+      padding-top: 80px; 
     }
 
     nav a {
-      color: white;
-      text-decoration: none;
-      margin: 10px 0;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    .resume-btn {
-      margin-top: auto;
-      background-color: red;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
+      flex-grow: 1;
+      padding: 15px;
       text-align: center;
-      position: relative; 
+      color: white;
       text-decoration: none;
-      transition: background-color 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
-    }
-    .resume-btn:hover {
-      background-color: darkred;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border-bottom: 1px solid #555;
     }
 
+    nav a:hover {
+      background: #555;
+    }
+
+    /* Main Content */
     main {
       grid-area: main;
-      padding: 20px;
-      display: grid; 
-      grid-template-columns: 1fr;
-      gap: 20px;
+      padding: 100px 20px 60px; 
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
     }
 
+    section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Skills and Projects Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .grid div {
+      background: #eee;
+      padding: 15px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .grid .highlight {
+      grid-column: span 2;
+      background: #ddd;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    /* Footer */
     footer {
       grid-area: footer;
-      background-color: #0c007c;
+      background: #333;
       color: white;
+      padding: 15px;
       text-align: center;
-      padding: 10px;
-    }
-    footer a {
-      color: #ffffff;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /*  Sections */
-    .section {
-      margin-bottom: 20px;
-    }
-    h2, h3 {
-      color: #0c007c;
-    }
-
-    /* Tables for Education/Experience */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 15px 0;
-    }
-    table, th, td {
-      border: 1px solid #0059ff;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #0051ff;
-      color: white;
-    }
-
-    /* Skills Section */
-    .skills ul {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      padding: 0;
-      margin: 0;
-    }
-
-    .skills li {
-      background: #0c007c;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 8px;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      cursor: pointer;
-    }
-    .skills li:hover {
-      transform: scale(1.1);
-      background-color: #005ab4;
-    }
-
-    /* Projects Section  */
-    .projects img {
-      width: 30%;
-      margin: 10px;
-      float: left;
-      border-radius: 8px;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .projects img:hover {
-      transform: scale(1.05);
-      opacity: 0.8;
-    }
-    .projects::after {
-      content: "";
-      display: block;
-      clear: both;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      body {
-        grid-template-columns: 200px 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        grid-template-areas:
-          "header"
-          "main"
-          "sidebar"
-          "footer";
-        grid-template-columns: 1fr;
-      }
-      nav {
-        height: auto;
-        position: relative;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      nav a {
-        margin: 5px 10px;
-      }
-      .resume-btn {
-        margin-top: 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header, nav, main, footer {
-        padding: 10px;
-      }
-      h1 {
-        font-size: 1.5em;
-      }
-      .skills li {
-        padding: 6px 10px;
-        font-size: 0.9em;
-      }
-      .projects img {
-        width: 100%;
-        float: none;
-      }
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -211,30 +130,26 @@
   <!-- Header -->
   <header>
     <h1>Samuel Caraballo</h1>
-    <p>Motivated and detail-oriented IT Specialist with experience in HTML, Python, Java, C and JavaScript.</p>
   </header>
 
-  <!-- Sidebar Navigation -->
+  <!-- Navigation -->
   <nav>
     <a href="#summary">Summary</a>
     <a href="#education">Education</a>
-    <a href="#experience">Experience</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
-    <a href="SamuelCaraballoResume.pdf" download="Samuel-Caraballo-Resume" class="resume-btn">Download Resume</a>
+    <a href="#resume">Resume</a>
   </nav>
 
   <!-- Main Content -->
   <main>
-    <!-- Summary -->
-    <div id="summary" class="section">
+    <section id="summary">
       <h2>Summary</h2>
-      <p>I am passionate about technology and problem solving. My goal is to apply my knowledge of programming and IT to create solutions and one day launch my own game.</p>
-    </div>
+      <p>Motivated and detail-oriented IT Specialist with experience in HTML, Python, Java, C, and JavaScript.</p>
+    </section>
 
-    <!-- Education -->
-    <div id="education" class="section">
+    <section id="education">
       <h2>Education</h2>
       <table>
         <tr>
@@ -248,59 +163,50 @@
           <td>2024 - Present</td>
         </tr>
       </table>
-    </div>
+    </section>
 
-    <!-- Experience -->
-    <div id="experience" class="section">
-      <h2>Experience</h2>
-      <table>
-        <tr>
-          <th>Company</th>
-          <th>Position</th>
-          <th>Years</th>
-        </tr>
-        <tr>
-          <td>Chick-fil-A</td>
-          <td>Team Member</td>
-          <td>July 2023 - May 2024</td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- Skills -->
-    <div id="skills" class="section skills">
+    <section id="skills">
       <h2>Skills</h2>
-      <ul>
-        <li>Python</li>
-        <li>JavaScript</li>
-        <li>HTML/CSS</li>
-        <li>Git/GitHub</li>
-        <li>Teamwork</li>
-        <li>Problem-Solving</li>
-        <li>Communication</li>
-      </ul>
-    </div>
+      <div class="grid">
+        <div class="highlight">Python</div>
+        <div>JavaScript</div>
+        <div>HTML/CSS</div>
+        <div>Git/GitHub</div>
+        <div>Teamwork</div>
+        <div>Problem-Solving</div>
+        <div>Communication</div>
+      </div>
+    </section>
 
-    <!-- Projects -->
-    <div id="projects" class="section projects">
+    <section id="projects">
       <h2>Projects</h2>
-      <h3>Project Fortress Wars</h3>
-      <p>Minecraft server project I was invited to work on where players can duel each other with custom kits and custom maps.</p>
-      <img src="FWspawn.png" alt="Fortress Wars Spawn">
-      <img src="FWmap1.png" alt="Fortress Wars Map">
-      <img src="FWkit.png" alt="Fortress Wars Kit">
-      <p>GitHub: <a href="https://github.com/Fortress-Wars" target="_blank">FortressWars GitHub</a></p>
-    </div>
+      <div class="grid">
+        <div class="highlight">
+          <h3>Project Fortress Wars</h3>
+          <img src="FWspawn.png" alt="FortressWars Project">
+          <p>Minecraft server project I was invited to work on where players can duel each other with custom kits and custom maps.</p>
+          <p>GitHub: <a href="https://github.com/Fortress-Wars" target="_blank">FortressWars GitHub</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:scaraballo808@gmail.com">scaraballo808@gmail.com</a></p>
+      <p>Phone: <a href="tel:+14809138758">(480) 913-8758</a></p>
+      <p>GitHub: <a href="https://github.com/Sc268245" target="_blank">GitHub</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/samuel-caraballo-4b4877273" target="_blank">LinkedIn</a></p>
+    </section>
+
+    <section id="resume">
+      <h2>Resume</h2>
+      <p><a href="SamuelCaraballoResume.pdf" download="Samuel-Caraballo-Resume">Download My Resume</a></p>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer id="contact">
-    <p>
-      Email: <a href="mailto:scaraballo808@gmail.com">scaraballo808@gmail.com</a> |
-      Phone: <a href="tel:+14809138758">(480) 913-8758</a> |
-      <a href="https://github.com/Sc268245" target="_blank">GitHub</a> |
-      <a href="https://www.linkedin.com/in/samuel-caraballo-4b4877273" target="_blank">LinkedIn</a>
-    </p>
+  <footer>
+    <p>&copy; 2025 Samuel Caraballo</p>
   </footer>
 
 </body>
