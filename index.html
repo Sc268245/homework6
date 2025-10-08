@@ -1,213 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samuel Caraballo - Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* NAVBAR (requirement: Bootstrap navbar) */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-      display: grid;
-      grid-template-areas:
-        "header header"
-        "nav main"
-        "footer footer";
-      grid-template-rows: auto 1fr auto;
-      grid-template-columns: 200px 1fr;
-      height: 100vh;
-    }
-
-    /* Header */
-    header {
-      grid-area: header;
-      background: #333;
-      color: white;
-      padding: 15px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
-      z-index: 1000;
-    }
-
-    /* Navigation */
-    nav {
-      grid-area: nav;
-      background: #444;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding-top: 80px; 
-    }
-
-    nav a {
-      flex-grow: 1;
-      padding: 15px;
-      text-align: center;
-      color: white;
-      text-decoration: none;
-      border-bottom: 1px solid #555;
-    }
-
-    nav a:hover {
-      background: #555;
-    }
-
-    /* Main Content */
-    main {
-      grid-area: main;
-      padding: 100px 20px 60px; 
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-
+    /* SECTION SPACING (requirement: responsive spacing for clean UI) */
     section {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 60px 0;
     }
 
-    /* Skills and Projects Grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-    }
-
-    .grid div {
-      background: #eee;
-      padding: 15px;
-      border-radius: 6px;
-      text-align: center;
-    }
-
-    .grid .highlight {
-      grid-column: span 2;
-      background: #ddd;
-    }
-
-    img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-
-    /* Footer */
-    footer {
-      grid-area: footer;
-      background: #333;
+    /* JUMBOTRON (requirement: color theory + typography) */
+    .jumbotron {
+      background: linear-gradient(90deg, #005f99, #0099cc);
       color: white;
-      padding: 15px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+
+    /* Resume Button */
+    .btn-custom {
+      background-color: #ffffff;
+      color: #005f99;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: 2px solid #005f99;
+      transition: all 0.3s;
+    }
+    .btn-custom:hover {
+      background-color: #005f99;
+      color: #fff;
+    }
+
+    /* SKILL CARDS (requirement: reactive skills hover effects) */
+    .skill-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+    .skill-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+      border-color: #005f99;
+    }
+
+    /* FOOTER */
+    footer {
+      background: linear-gradient(90deg, #0099cc, #005f99);
+      color: white;
+      padding: 25px;
+      margin-top: 50px;
+    }
+
+    /* IMAGES (Bootstrap responsive) */
+    .img-rounded {
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .img-rounded:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1>Samuel Caraballo</h1>
-  </header>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <!-- Collapsible button for mobile -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Portfolio</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="SamuelCaraballoResume.pdf" download>
+            <button class="btn btn-custom navbar-btn">Download Resume</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#summary">Summary</a>
-    <a href="#education">Education</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-    <a href="#resume">Resume</a>
-  </nav>
+<!-- ================= HEADER ================= -->
+<div class="jumbotron text-center">
+  <h1>Samuel Caraballo</h1>
+  <p>Developer | Designer | Creator</p>
+  <p>I enjoy developing games and web applications using Java and modern web technologies.</p>
+</div>
 
-  <!-- Main Content -->
-  <main>
-    <section id="summary">
-      <h2>Summary</h2>
-      <p>Motivated and detail-oriented IT Specialist with experience in HTML, Python, Java, C, and JavaScript.</p>
-    </section>
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="container text-center">
+  <h2>My Project: FortresWars</h2>
+  <p><strong>FortresWars</strong> is a Minecraft-based PvP strategy game where players defend their fortress and attack others. I developed features such as kit selection, map design, and player spawning systems using Java plugins and server scripting.</p>
+  
+  <div class="row" style="margin-top:40px;">
+    <div class="col-sm-4">
+      <p>Kit Selection System</p>
+      <img src="FWkit.png" class="img-responsive img-rounded" alt="Kit Area">
+    </div>
+    <div class="col-sm-4">
+      <p>Battle Map Layout</p>
+      <img src="FWmap1.png" class="img-responsive img-rounded" alt="Map View">
+    </div>
+    <div class="col-sm-4">
+      <p>Spawn & Game Setup</p>
+      <img src="FWspawn.png" class="img-responsive img-rounded" alt="Spawn Area">
+    </div>
+  </div>
+</section>
 
-    <section id="education">
-      <h2>Education</h2>
-      <table>
-        <tr>
-          <th>Institution</th>
-          <th>Degree</th>
-          <th>Years</th>
-        </tr>
-        <tr>
-          <td>Northern Arizona University</td>
-          <td>B.S. Computer Science</td>
-          <td>2024 - Present</td>
-        </tr>
-      </table>
-    </section>
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="container text-center">
+  <h2>My Skills</h2>
+  <p>Here are the key skills I’ve been developing through my coursework and projects:</p>
+  <div class="row" style="margin-top:40px;">
 
-    <section id="skills">
-      <h2>Skills</h2>
-      <div class="grid">
-        <div class="highlight">Python</div>
-        <div>JavaScript</div>
-        <div>HTML/CSS</div>
-        <div>Git/GitHub</div>
-        <div>Teamwork</div>
-        <div>Problem-Solving</div>
-        <div>Communication</div>
+    <!-- Skill 1 -->
+    <div class="col-sm-4">
+      <div class="skill-card">
+        <span class="glyphicon glyphicon-console" style="font-size:40px;color:#005f99;"></span>
+        <h4>Java</h4>
+        <p>Strong understanding of object-oriented programming and plugin development for Minecraft-based projects.</p>
       </div>
-    </section>
+    </div>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="grid">
-        <div class="highlight">
-          <h3>Project Fortress Wars</h3>
-          <img src="FWspawn.png" alt="FortressWars Project">
-          <p>Minecraft server project I was invited to work on where players can duel each other with custom kits and custom maps.</p>
-          <p>GitHub: <a href="https://github.com/Fortress-Wars" target="_blank">FortressWars GitHub</a></p>
-        </div>
+    <!-- Skill 2 -->
+    <div class="col-sm-4">
+      <div class="skill-card">
+        <span class="glyphicon glyphicon-globe" style="font-size:40px;color:#005f99;"></span>
+        <h4>HTML & CSS</h4>
+        <p>Building clean, responsive layouts for web applications using modern design principles.</p>
       </div>
-    </section>
+    </div>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:scaraballo808@gmail.com">scaraballo808@gmail.com</a></p>
-      <p>Phone: <a href="tel:+14809138758">(480) 913-8758</a></p>
-      <p>GitHub: <a href="https://github.com/Sc268245" target="_blank">GitHub</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/samuel-caraballo-4b4877273" target="_blank">LinkedIn</a></p>
-    </section>
+    <!-- Skill 3 -->
+    <div class="col-sm-4">
+      <div class="skill-card">
+        <span class="glyphicon glyphicon-signal" style="font-size:40px;color:#005f99;"></span>
+        <h4>Bootstrap</h4>
+        <p>Utilizing Bootstrap to create responsive, structured, and user-friendly web interfaces.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="resume">
-      <h2>Resume</h2>
-      <p><a href="SamuelCaraballoResume.pdf" download="Samuel-Caraballo-Resume">Download My Resume</a></p>
-    </section>
-  </main>
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="container text-center">
+  <h2>Contact</h2>
+  <p>If you’d like to get in touch, feel free to reach out for project collaborations or opportunities.</p>
+  <p><span class="glyphicon glyphicon-envelope"></span> samuelcaraballo@example.com</p>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Samuel Caraballo</p>
-  </footer>
+<!-- ================= FOOTER ================= -->
+<footer class="container-fluid text-center">
+  <p>&copy; 2025 Samuel Caraballo | Built with Bootstrap</p>
+</footer>
 
 </body>
 </html>
