@@ -11,25 +11,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
   <style>
-    /* NAVBAR (requirement: Bootstrap navbar) */
+    /* NAVBAR */
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
     }
 
-    /* SECTION SPACING (requirement: responsive spacing for clean UI) */
     section {
       padding: 60px 0;
     }
 
-    /* JUMBOTRON (requirement: color theory + typography) */
+    /* HEADER / JUMBOTRON */
     .jumbotron {
       background: linear-gradient(90deg, #005f99, #0099cc);
       color: white;
       margin-bottom: 0;
     }
 
-    /* Resume Button */
+    /* BUTTON STYLE */
     .btn-custom {
       background-color: #ffffff;
       color: #005f99;
@@ -44,7 +43,7 @@
       color: #fff;
     }
 
-    /* SKILL CARDS (requirement: reactive skills hover effects) */
+    /* SKILL CARDS */
     .skill-card {
       background-color: #fff;
       border: 1px solid #ddd;
@@ -67,7 +66,7 @@
       margin-top: 50px;
     }
 
-    /* IMAGES (Bootstrap responsive) */
+    /* IMAGES */
     .img-rounded {
       border-radius: 10px;
       transition: transform 0.3s ease;
@@ -101,7 +100,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a href="SamuelCaraballoResume.pdf" download>
-            <button class="btn btn-custom navbar-btn">Download Resume</button>
+            <button id="downloadResume" class="btn btn-custom navbar-btn">Download Resume</button>
           </a>
         </li>
       </ul>
@@ -114,6 +113,7 @@
   <h1>Samuel Caraballo</h1>
   <p>Developer | Designer | Creator</p>
   <p>I enjoy developing games and web applications using Java and modern web technologies.</p>
+  <h3 id="greeting"></h3>
 </div>
 
 <!-- ================= PROJECTS ================= -->
@@ -135,6 +135,8 @@
       <img src="FWspawn.png" class="img-responsive img-rounded" alt="Spawn Area">
     </div>
   </div>
+
+  <p id="deadlineInfo" style="margin-top:20px; font-weight:bold;"></p>
 </section>
 
 <!-- ================= SKILLS ================= -->
@@ -143,7 +145,6 @@
   <p>Here are the key skills I’ve been developing through my coursework and projects:</p>
   <div class="row" style="margin-top:40px;">
 
-    <!-- Skill 1 -->
     <div class="col-sm-4">
       <div class="skill-card">
         <span class="glyphicon glyphicon-console" style="font-size:40px;color:#005f99;"></span>
@@ -152,7 +153,6 @@
       </div>
     </div>
 
-    <!-- Skill 2 -->
     <div class="col-sm-4">
       <div class="skill-card">
         <span class="glyphicon glyphicon-globe" style="font-size:40px;color:#005f99;"></span>
@@ -161,7 +161,6 @@
       </div>
     </div>
 
-    <!-- Skill 3 -->
     <div class="col-sm-4">
       <div class="skill-card">
         <span class="glyphicon glyphicon-signal" style="font-size:40px;color:#005f99;"></span>
@@ -183,6 +182,9 @@
 <footer class="container-fluid text-center">
   <p>&copy; 2025 Samuel Caraballo | Built with Bootstrap</p>
 </footer>
+
+<!-- Link JS file -->
+<script src="app.js"></script>
 
 </body>
 </html>
