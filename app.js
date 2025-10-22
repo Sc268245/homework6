@@ -1,53 +1,146 @@
-console.log("JavaScript connected successfully!");
+window.onload = function () {
+  // Attach event listeners
+  document.getElementById("add-skill-btn").addEventListener("click", addSkill);
+  document.getElementById("download-btn").addEventListener("click", downloadResume);
+  document.getElementById("toggle-theme-btn").addEventListener("click", toggleTheme);
+  document.getElementById("bgColorPicker").addEventListener("input", changeBackground);
+  document.getElementById("fontSizeInput").addEventListener("input", changeFontSize);
 
-// Variables
-const name = "Samuel Caraballo";
-let hasDownloadedResume = false;
+  displayProjects();
+  createEducationTable();
+};
 
-// Show greeting based on time
-function timeBasedGreeting() {
-  const hours = new Date().getHours();
-  if (hours < 12) return "Good Morning, " + name + "!";
-  else if (hours < 18) return "Good Afternoon, " + name + "!";
-  else return "Good Evening, " + name + "!";
+// Step 1: Add Skill
+function addSkill() {
+  const skillInput = document.getElementById("skill-input");
+  const skill = skillInput.value.trim();
+  if (skill !== "") {
+    const li = document.createElement("li");
+    li.textContent = skill;
+    document.getElementById("skills-list").appendChild(li);
+    skillInput.value = "";
+  } else {
+    alert("Please enter a skill!");
+  }
 }
 
-// Show greeting when page loads
-document.addEventListener("DOMContentLoaded", function () {
-  const greetingElement = document.getElementById("greeting");
-  if (greetingElement) {
-    greetingElement.textContent = timeBasedGreeting();
-  }
-});
+// Step 2: Projects (with local images)
+const projects = [
+  {
+    title: "Fortress Wars",
+    description: "A Minecraft PvP plugin with arena logic, team-based combat, and a custom spawn system.",
+    image: "FWkit.png",
+    deadline: new Date("2025-12-01"),
+  },
+  {
+    title: "Fortress Wars Map Design",
+    description: "Created detailed map layouts and spawn areas using custom builds for balanced gameplay.",
+    image: "FWmap1.png",
+    deadline: new Date("2025-11-15"),
+  },
+  {
+    title: "Fortress Wars Spawn Area",
+    description: "Developed a central spawn hub with interactive NPCs and teleport pads using Java code.",
+    image: "FWspawn.png",
+    deadline: new Date("2024-12-15"),
+  },
+];
 
-// Resume download alert
-const downloadBtn = document.getElementById("downloadResume");
-if (downloadBtn) {
-  downloadBtn.addEventListener("click", function () {
-    if (!hasDownloadedResume) {
-      hasDownloadedResume = true;
-      setTimeout(() => {
-        alert("Your resume is downloaded successfully!");
-      }, 2000); // 2 second delay
+function displayProjects() {
+  const projectList = document.getElementById("project-list");
+  const today = new Date();
+  projectList.innerHTML = "";
+
+  projects.forEach((project) => {
+    const card = document.createElement("div");
+    card.classList.add("project-card");
+
+    const img = document.createElement("img");
+    img.src = project.image;
+    img.alt = project.title;
+
+    const title = document.createElement("h3");
+    title.textContent = project.title;
+
+    const desc = document.createElement("p");
+    desc.textContent = project.description;
+
+    const deadline = document.createElement("p");
+    deadline.textContent = "Deadline: " + project.deadline.toDateString();
+
+    const status = document.createElement("p");
+    if (project.deadline > today) {
+      status.textContent = "Status: Ongoing";
+      status.style.color = "green";
     } else {
-      console.log("Resume already downloaded once.");
+      status.textContent = "Status: Completed";
+      status.style.color = "gray";
     }
+
+    card.appendChild(img);
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(deadline);
+    card.appendChild(status);
+    projectList.appendChild(card);
   });
 }
 
-// Calculate days until project deadline
-function daysUntilDeadline(deadline) {
-  const today = new Date();
-  const targetDate = new Date(deadline);
-  const diffTime = targetDate - today;
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
+// Step 4: Resume Download Tracker
+let downloadCount = 0;
+function downloadResume() {
+  downloadCount++;
+  document.getElementById("download-count").textContent =
+    `Resume downloaded ${downloadCount} time${downloadCount > 1 ? "s" : ""}.`;
 }
 
-const daysLeft = daysUntilDeadline("2025-12-01");
-console.log("Days left until project deadline:", daysLeft);
+// Step 5: Education Table
+const education = [
+  { degree: "B.S. in Computer Science", school: "Northern Arizona University", start: "2024", end: "2028" },
+  { degree: "High School Diploma", school: "Chandler High School", start: "2020", end: "2024" },
+];
 
-const deadlineInfo = document.getElementById("deadlineInfo");
-if (deadlineInfo) {
-  deadlineInfo.textContent = `Days remaining until FortresWars update deadline: ${daysLeft} days.`;
+function createEducationTable() {
+  const container = document.getElementById("education-table");
+  const table = document.createElement("table");
+
+  const headers = ["Degree", "School", "Start", "End"];
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+
+  headers.forEach((h) => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  education.forEach((item) => {
+    const row = document.createElement("tr");
+    Object.values(item).forEach((value) => {
+      const td = document.createElement("td");
+      td.textContent = value;
+      row.appendChild(td);
+    });
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+// Bonus: Theme Controls
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
+}
+
+function changeBackground() {
+  const color = document.getElementById("bgColorPicker").value;
+  document.body.style.backgroundColor = color;
+}
+
+function changeFontSize() {
+  const size = document.getElementById("fontSizeInput").value;
+  if (size) document.body.style.fontSize = size + "px";
 }
