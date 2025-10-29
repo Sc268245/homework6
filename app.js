@@ -1,146 +1,174 @@
-window.onload = function () {
-  // Attach event listeners
-  document.getElementById("add-skill-btn").addEventListener("click", addSkill);
-  document.getElementById("download-btn").addEventListener("click", downloadResume);
-  document.getElementById("toggle-theme-btn").addEventListener("click", toggleTheme);
-  document.getElementById("bgColorPicker").addEventListener("input", changeBackground);
-  document.getElementById("fontSizeInput").addEventListener("input", changeFontSize);
+$(document).ready(function () {
 
-  displayProjects();
-  createEducationTable();
-};
+  let skills = ["Java", "HTML", "CSS"];
 
-// Step 1: Add Skill
-function addSkill() {
-  const skillInput = document.getElementById("skill-input");
-  const skill = skillInput.value.trim();
-  if (skill !== "") {
-    const li = document.createElement("li");
-    li.textContent = skill;
-    document.getElementById("skills-list").appendChild(li);
-    skillInput.value = "";
-  } else {
-    alert("Please enter a skill!");
-  }
-}
-
-// Step 2: Projects (with local images)
-const projects = [
-  {
-    title: "Fortress Wars",
-    description: "A Minecraft PvP plugin with arena logic, team-based combat, and a custom spawn system.",
-    image: "FWkit.png",
-    deadline: new Date("2025-12-01"),
-  },
-  {
-    title: "Fortress Wars Map Design",
-    description: "Created detailed map layouts and spawn areas using custom builds for balanced gameplay.",
-    image: "FWmap1.png",
-    deadline: new Date("2025-11-15"),
-  },
-  {
-    title: "Fortress Wars Spawn Area",
-    description: "Developed a central spawn hub with interactive NPCs and teleport pads using Java code.",
-    image: "FWspawn.png",
-    deadline: new Date("2024-12-15"),
-  },
-];
-
-function displayProjects() {
-  const projectList = document.getElementById("project-list");
-  const today = new Date();
-  projectList.innerHTML = "";
-
-  projects.forEach((project) => {
-    const card = document.createElement("div");
-    card.classList.add("project-card");
-
-    const img = document.createElement("img");
-    img.src = project.image;
-    img.alt = project.title;
-
-    const title = document.createElement("h3");
-    title.textContent = project.title;
-
-    const desc = document.createElement("p");
-    desc.textContent = project.description;
-
-    const deadline = document.createElement("p");
-    deadline.textContent = "Deadline: " + project.deadline.toDateString();
-
-    const status = document.createElement("p");
-    if (project.deadline > today) {
-      status.textContent = "Status: Ongoing";
-      status.style.color = "green";
-    } else {
-      status.textContent = "Status: Completed";
-      status.style.color = "gray";
-    }
-
-    card.appendChild(img);
-    card.appendChild(title);
-    card.appendChild(desc);
-    card.appendChild(deadline);
-    card.appendChild(status);
-    projectList.appendChild(card);
-  });
-}
-
-// Step 4: Resume Download Tracker
-let downloadCount = 0;
-function downloadResume() {
-  downloadCount++;
-  document.getElementById("download-count").textContent =
-    `Resume downloaded ${downloadCount} time${downloadCount > 1 ? "s" : ""}.`;
-}
-
-// Step 5: Education Table
-const education = [
-  { degree: "B.S. in Computer Science", school: "Northern Arizona University", start: "2024", end: "2028" },
-  { degree: "High School Diploma", school: "Chandler High School", start: "2020", end: "2024" },
-];
-
-function createEducationTable() {
-  const container = document.getElementById("education-table");
-  const table = document.createElement("table");
-
-  const headers = ["Degree", "School", "Start", "End"];
-  const thead = document.createElement("thead");
-  const headerRow = document.createElement("tr");
-
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-
-  const tbody = document.createElement("tbody");
-  education.forEach((item) => {
-    const row = document.createElement("tr");
-    Object.values(item).forEach((value) => {
-      const td = document.createElement("td");
-      td.textContent = value;
-      row.appendChild(td);
+  const renderSkills = (list = skills) => {
+    $("#skills-list").empty();
+    list.forEach((skill, i) => {
+      const li = $(`
+        <li>
+          <span>${skill}</span>
+          <div>
+            <button class="edit" data-index="${i}">Edit</button>
+            <button class="delete" data-index="${i}">Delete</button>
+          </div>
+        </li>
+      `);
+      $("#skills-list").append(li.hide().fadeIn(300));
     });
-    tbody.appendChild(row);
+  };
+
+  const addSkill = (skill) => {
+    skill = skill.trim();
+    if (!skill) return alert("Please enter a skill!");
+    if (skills.includes(skill)) return alert("Skill already exists!");
+    skills.push(skill);
+    renderSkills();
+    $("#skill-input").val("");
+  };
+
+  $("#add-skill-btn").on("click", () => addSkill($("#skill-input").val()));
+
+  $("#skills-list").on("click", ".edit", function () {
+    const i = $(this).data("index");
+    const newSkill = prompt("Edit skill:", skills[i]);
+    if (newSkill && newSkill.trim()) {
+      skills[i] = newSkill.trim();
+      renderSkills();
+    }
   });
-  table.appendChild(tbody);
-  container.appendChild(table);
-}
 
-// Bonus: Theme Controls
-function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
-}
+  $("#skills-list").on("click", ".delete", function () {
+    const i = $(this).data("index");
+    $(this).closest("li").slideUp(300, () => {
+      skills.splice(i, 1);
+      renderSkills();
+    });
+  });
 
-function changeBackground() {
-  const color = document.getElementById("bgColorPicker").value;
-  document.body.style.backgroundColor = color;
-}
+  $("#skill-input").on("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill($(this).val());
+    } else if (e.key === "Escape") {
+      $(this).val("");
+    }
+  });
 
-function changeFontSize() {
-  const size = document.getElementById("fontSizeInput").value;
-  if (size) document.body.style.fontSize = size + "px";
-}
+  $("#skillSearch").on("input", function () {
+    const q = $(this).val().toLowerCase();
+    const filtered = skills.filter((s) => s.toLowerCase().includes(q));
+    renderSkills(filtered);
+  });
+
+  renderSkills();
+
+  const projects = [
+    {
+      title: "Fortress Wars",
+      description: "A Minecraft PvP plugin with arena logic and custom spawn system.",
+      image: "FWkit.png",
+      deadline: new Date("2025-12-01"),
+    },
+    {
+      title: "Fortress Wars Map Design",
+      description: "Created detailed map layouts and spawn areas for balanced gameplay.",
+      image: "FWmap1.png",
+      deadline: new Date("2025-11-15"),
+    },
+    {
+      title: "Fortress Wars Spawn Area",
+      description: "Developed a central spawn hub with interactive NPCs and teleport pads using Java.",
+      image: "FWspawn.png",
+      deadline: new Date("2024-12-15"),
+    },
+  ];
+
+  const renderProjects = () => {
+    $("#project-list").empty();
+    const today = new Date();
+    projects.forEach((p) => {
+      const status = p.deadline > today ? "Ongoing" : "Completed";
+      const color = p.deadline > today ? "green" : "gray";
+      const card = $(`
+        <div class="project-card">
+          <img src="${p.image}" alt="${p.title}">
+          <h3>${p.title}</h3>
+          <p>${p.description}</p>
+          <p><strong>Deadline:</strong> ${p.deadline.toDateString()}</p>
+          <p style="color:${color}"><strong>Status:</strong> ${status}</p>
+        </div>
+      `);
+      $("#project-list").append(card.hide().fadeIn(300));
+    });
+  };
+
+  $("#sortControls").html(`
+    <button id="sortAsc">Sort by Earliest Deadline</button>
+    <button id="sortDesc">Sort by Latest Deadline</button>
+  `);
+
+  $("#sortAsc").on("click", () => {
+    projects.sort((a, b) => a.deadline - b.deadline);
+    renderProjects();
+  });
+
+  $("#sortDesc").on("click", () => {
+    projects.sort((a, b) => b.deadline - a.deadline);
+    renderProjects();
+  });
+
+  renderProjects();
+
+  let downloadCount = 0;
+  $("#download-btn").on("click", function () {
+    downloadCount++;
+    $("#download-count").text(`Resume downloaded ${downloadCount} time${downloadCount > 1 ? "s" : ""}.`);
+  });
+
+  const education = [
+    { degree: "B.S. in Computer Science", school: "Northern Arizona University", start: "2024", end: "2028" },
+    { degree: "High School Diploma", school: "Chandler High School", start: "2020", end: "2024" },
+  ];
+
+  const renderEducation = () => {
+    let html = `
+      <table>
+        <tr><th>Degree</th><th>School</th><th>Start</th><th>End</th></tr>
+    `;
+    education.forEach((e) => {
+      html += `<tr><td>${e.degree}</td><td>${e.school}</td><td>${e.start}</td><td>${e.end}</td></tr>`;
+    });
+    html += `</table>`;
+    $("#education-table").html(html);
+  };
+  renderEducation();
+
+  $("#toggle-theme-btn").on("click", () => $("body").toggleClass("dark-mode"));
+  $("#bgColorPicker").on("input", function () {
+    $("body").css("background-color", $(this).val());
+  });
+  $("#fontSizeInput").on("input", function () {
+    const v = $(this).val();
+    if (v) $("body").css("font-size", v + "px");
+  });
+
+  $("nav a").on("click", function (e) {
+    e.preventDefault();
+    const target = $(this).attr("href");
+    $("html, body").animate({ scrollTop: $(target).offset().top - 60 }, 600);
+  });
+
+  $(window).on("scroll", function () {
+    const scrollPos = $(document).scrollTop();
+    $("section").each(function () {
+      const top = $(this).offset().top - 80;
+      const bottom = top + $(this).outerHeight();
+      const id = $(this).attr("id");
+      if (scrollPos >= top && scrollPos < bottom) {
+        $("nav a").removeClass("active");
+        $('nav a[href="#' + id + '"]').addClass("active");
+      }
+    });
+  });
+});
